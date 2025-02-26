@@ -13,9 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy the entire project
 COPY . /app
 
-
 # Ensure the config.yaml file is copied to the correct location
-COPY ./config.yaml /app/connections/config.yaml
+COPY config.yaml /app/connections/config.yaml
 
 # Install airbyte_serverless and dependencies
 RUN pip install --no-cache-dir -e .
