@@ -22,5 +22,14 @@ ENV PATH="/root/.local/bin:$PATH"
 # Expose port if needed (depends on usage)
 EXPOSE 8080
 
+# Set required environment variables
+ENV AIRBYTE_SOURCE=airbyte-source-faker
+ENV AIRBYTE_DESTINATION=airbyte-destination-bigquery
+ENV CONFIG_PATH=/app/connections/config.yaml
+ENV AIRBYTE_ENTRYPOINT="run-env-vars"  # Fix missing environment variable
+
+# Copy configuration file into the container (if using a config-based setup)
+COPY ./connections/config.yaml /app/connections/config.yaml
+
 # Default command to run Airbyte Serverless
 ENTRYPOINT ["abs", "run-env-vars"]
