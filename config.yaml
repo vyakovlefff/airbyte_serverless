@@ -1,1 +1,28 @@
+# Define the Airbyte connection name
+connection_name: "my_airbyte_connection"
 
+# Define the source connector
+source:
+  docker_image: "airbyte/source-faker:latest"  # Example source connector
+  config:
+    count: 100  # Number of records to generate
+    seed: 42    # Seed for reproducibility
+
+# Define the destination connector
+destination:
+  docker_image: "airbyte/destination-bigquery:latest"  # Example destination connector
+  config:
+    project_id: "your-gcp-project-id"
+    dataset_id: "your_dataset"
+    credentials_json: "${GCP_CREDENTIALS_JSON}"  # Environment variable storing your GCP credentials
+
+# Define the sync settings
+sync:
+  frequency: "manual"  # Options: manual, cron expression
+  namespace_format: "${SOURCE_NAMESPACE}"  # Namespace format
+  streams:
+    - name: "users"  # Example stream name
+      sync_mode: "full_refresh"  # Options: full_refresh, incremental
+      destination_sync_mode: "append"  # Options: append, overwrite, append_dedup
+      primary_key: ["id"]  # Primary key for deduplication
+      cursor_field: ["updated_at"]  # Cursor field for incremental syncs
