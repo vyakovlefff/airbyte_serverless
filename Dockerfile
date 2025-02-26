@@ -22,5 +22,5 @@ ENV PATH="/root/.local/bin:$PATH"
 # Expose port if needed (depends on usage)
 EXPOSE 8080
 
-# Default command to run the CLI
-ENTRYPOINT ["abs"]
+# Default command to run Airbyte Serverless
+ENTRYPOINT ["abs", "run-env-vars"]
