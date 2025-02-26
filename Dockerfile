@@ -34,5 +34,3 @@ ENV AIRBYTE_ENTRYPOINT="run-env-vars"
 # **Fix: Encode YAML_CONFIG at runtime instead of build time**
 CMD ["sh", "-c", "export YAML_CONFIG_B64=$(base64 /app/connections/config.yaml | tr -d '\\n') && abs run-env-vars"]
 
-# **Fix: Correctly set YAML_CONFIG_B64 and ensure it's always available**
-ENTRYPOINT ["/bin/sh", "-c", "if [ ! -f $YAML_CONFIG ]; then echo 'ERROR: config.yaml not found' && exit 1; fi; export YAML_CONFIG_B64=$(base64 $YAML_CONFIG | tr -d '\\n'); exec abs run-env-vars"]
