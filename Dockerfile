@@ -13,8 +13,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy the entire project
 COPY . /app
 
+# **Fix: Set YAML_CONFIG globally so it persists across commands**
+ENV YAML_CONFIG="config.yaml"
 # Ensure the config.yaml file is copied to the correct location
 COPY config.yaml /app/connections/config.yaml
+
 
 # Install airbyte_serverless and dependencies
 RUN pip install --no-cache-dir -e .
@@ -27,6 +30,8 @@ EXPOSE 8080
 
 # **Fix: Set AIRBYTE_ENTRYPOINT to avoid missing variable error**
 ENV AIRBYTE_ENTRYPOINT="run-env-vars"
+
+
 
 # **Fix: Encode YAML_CONFIG at runtime instead of build time**
 CMD ["sh", "-c", "export YAML_CONFIG_B64=$(base64 /app/connections/config.yaml | tr -d '\\n') && abs run-env-vars"]
