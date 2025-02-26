@@ -14,9 +14,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY . /app
 
 # Install airbyte_serverless and dependencies
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir -e .
 
-# Expose port if required (depends on usage)
+# Ensure /root/.local/bin is in PATH so abs CLI works
+ENV PATH="/root/.local/bin:$PATH"
+
+# Expose port if needed (depends on usage)
 EXPOSE 8080
 
 # Default command to run the CLI
