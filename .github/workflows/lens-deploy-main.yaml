@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_PREFIX: registry.cloudzilla.ai/prod-project-0ea55e52bd/main/
+  IMAGE_PREFIX: registry.cloudzilla.ai/prod-project-06065328b5/main/
 
 jobs:
   cz-build-push:
@@ -22,7 +22,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: https://registry.cloudzilla.ai/
-          username: 'robot$prod-project-0ea55e52bd+imageuser'
+          username: 'robot$prod-project-06065328b5+imageuser'
           password: '${{ secrets.CZ_BRANCH_MAIN_DOCKER_PASSWORD }}'
 
       - name: downcase REPO
@@ -81,7 +81,7 @@ jobs:
         with:
           context: .
           push: true
-          file: .github/workflows/cloudzilla/main/Dockerfile
+          file: Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Deploy on Section
@@ -89,7 +89,7 @@ jobs:
           SECTION_K8S_API_URL: '${{ secrets.CZ_BRANCH_MAIN_SECTION_K8S_API_URL }}'
           SECTION_API_TOKEN: '${{ secrets.CZ_BRANCH_MAIN_SECTION_API_TOKEN }}'
           DOCKER_SERVER: 'registry.cloudzilla.ai'
-          DOCKER_USERNAME: 'robot$prod-project-0ea55e52bd+imageuser'
+          DOCKER_USERNAME: 'robot$prod-project-06065328b5+imageuser'
           DOCKER_PASSWORD: '${{ secrets.CZ_BRANCH_MAIN_DOCKER_PASSWORD }}'
           FULL_IMAGE_WITH_TAG: '${{ env.DOCKER_METADATA_OUTPUT_TAGS }}'
           POD_NAME: '${{ env.IMAGE_NAME }}'
