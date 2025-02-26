@@ -25,8 +25,9 @@ EXPOSE 8080
 # **Fix: Set AIRBYTE_ENTRYPOINT to avoid missing variable error**
 ENV AIRBYTE_ENTRYPOINT="run-env-vars"
 
-# **Fix: Set YAML_CONFIG so Airbyte knows where to find the config file**
-ENV YAML_CONFIG="/app/connections/config.yaml"
+# **Fix: Encode YAML_CONFIG in Base64 (this prevents the Incorrect Padding error)**
+RUN cat /app/connections/config.yaml | base64 -w 0 > /app/connections/config.yaml.b64
+ENV YAML_CONFIG_B64="$(cat /app/connections/config.yaml.b64)"
 
 # Default command to run Airbyte Serverless
 ENTRYPOINT ["abs", "run-env-vars"]
