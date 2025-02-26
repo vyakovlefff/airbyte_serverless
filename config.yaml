@@ -14,17 +14,7 @@ destination:
   config:
     project_id: "my-gcp-project"
     dataset_id: "airbyte_dataset"
-    credentials_json: 
-      type: "service_account"
-      project_id: "my-gcp-project"
-      private_key_id: "YOUR_PRIVATE_KEY_ID"
-      private_key: "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n"
-      client_email: "your-service-account@your-project.iam.gserviceaccount.com"
-      client_id: "YOUR_CLIENT_ID"
-      auth_uri: "https://accounts.google.com/o/oauth2/auth"
-      token_uri: "https://oauth2.googleapis.com/token"
-      auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-      client_x509_cert_url: "YOUR_CERT_URL"
+    credentials_json: GCP_SECRET("projects/my-gcp-project/secrets/bigquery-key/versions/latest")  # Uses Google Secret Manager for security
 
 # Define the sync settings
 sync:
@@ -36,6 +26,11 @@ sync:
       destination_sync_mode: "append"
       primary_key: ["id"]
       cursor_field: ["updated_at"]
+
+# Remote runner for Cloud Run
+remote_runner:
+  type: "cloud_run_job"
+  service_account: "your-service-account@your-project.iam.gserviceaccount.com"
 
 # Extra configuration to avoid missing variable errors
 runtime:
