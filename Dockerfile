@@ -31,6 +31,6 @@ EXPOSE 8080
 # **Fix: Set AIRBYTE_ENTRYPOINT to avoid missing variable error**
 ENV AIRBYTE_ENTRYPOINT="run-env-vars"
 
-# **Fix: Encode YAML_CONFIG at runtime instead of build time**
-CMD ["sh", "-c", "export YAML_CONFIG_B64=$(base64 /app/connections/config.yaml | tr -d '\\n') && abs run-env-vars"]
 
+# **Fix: Ensure YAML_CONFIG_B64 is properly set and persistently available**
+ENTRYPOINT ["/bin/sh", "-c", "if [ ! -f $YAML_CONFIG ]; then echo 'ERROR: config.yaml not found' && exit 1; fi; export YAML_CONFIG_B64=$(cat $YAML_CONFIG | base64 | tr -d '\\n'); exec abs run-env-vars"]
