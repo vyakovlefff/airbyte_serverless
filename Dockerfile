@@ -28,6 +28,7 @@ ENV SYNC_STREAMS="[]"
 ENV REMOTE_RUNNER_TYPE=disabled
 ENV REMOTE_RUNNER_SERVICE_ACCOUNT=disabled
 ENV YAML_CONFIG_B64="e30="
+ENV YAML_CONFIG="/dev/null"
 ENV AIRBYTE_ENTRYPOINT="run-env-vars"
 
 CMD ["abs", "run-env-vars"]
