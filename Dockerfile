@@ -27,8 +27,9 @@ ENV SYNC_NAMESPACE_FORMAT=disabled
 ENV SYNC_STREAMS="[]"
 ENV REMOTE_RUNNER_TYPE=disabled
 ENV REMOTE_RUNNER_SERVICE_ACCOUNT=disabled
-ENV YAML_CONFIG_B64="e30="
-ENV YAML_CONFIG="/dev/null"
+ENV YAML_CONFIG_B64="eyJ9Cg=="
+RUN touch /app/empty_config.yaml
+ENV YAML_CONFIG="/app/empty_config.yaml"
 ENV AIRBYTE_ENTRYPOINT="run-env-vars"
 
 CMD ["abs", "run-env-vars"]
