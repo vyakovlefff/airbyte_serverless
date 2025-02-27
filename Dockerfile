@@ -24,28 +24,18 @@ EXPOSE 8080
 
 # Set deployment configurations (No syncs, no connections)
 ENV CONNECTION_NAME=disabled
-
-# Source Configuration (Disabled)
 ENV SOURCE_DOCKER_IMAGE=disabled
 ENV SOURCE_CONFIG_COUNT=0
 ENV SOURCE_CONFIG_SEED=0
-
-# Destination Configuration (Disabled)
 ENV DEST_DOCKER_IMAGE=disabled
 ENV DEST_CONFIG_PROJECT_ID=disabled
 ENV DEST_CONFIG_DATASET_ID=disabled
 ENV DEST_CONFIG_CREDENTIALS_JSON="{}"
-
-# Sync Configuration (Disabled)
 ENV SYNC_FREQUENCY=disabled
 ENV SYNC_NAMESPACE_FORMAT=disabled
 ENV SYNC_STREAMS="[]"  # Empty list to prevent errors
-
-# Remote Runner Configuration (Disabled)
 ENV REMOTE_RUNNER_TYPE=disabled
 ENV REMOTE_RUNNER_SERVICE_ACCOUNT=disabled
-
-# Set runtime configurations (entrypoint)
 ENV RUNTIME_ENTRYPOINT=run-env-vars
 
 # Default Command for auto-run (No need to manually set entrypoint)
